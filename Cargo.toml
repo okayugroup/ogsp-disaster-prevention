@@ -1,0 +1,7 @@
+[package]
+name = "ogsp-disaster-prevention"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+iced = "0.13.1"
