@@ -7,22 +7,22 @@ struct Counter {
 enum Message {
 }
 
+use iced::widget::shader::Program;
 use iced::widget::{column, text, Column};
 
 impl Counter {
     pub fn view(&self) -> Column<Message> {
-        // We use a column: a simple vertical layout
+        // 縦に並べるやつ
         column![
             text("Hello World!"),
         ]
     }
-}
-
-impl Counter {
     pub fn update(&mut self, _message: Message) {
+        // ここにイベント処理とかを書く。
     }
 }
 
 fn main() -> iced::Result {
-    iced::run("My app", Counter::update, Counter::view)
+    iced::application("OGSP防災アプリ", Counter::update, Counter::view)
+        .run()
 }
