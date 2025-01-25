@@ -1,43 +1,65 @@
+mod font;
+
+use iced::widget::{center, column, text, Container};
+use iced::{Settings, Size, Task, Theme};
+
+fn main() -> iced::Result {
+
+    iced::application("OGSP Disaster Prevention", App::update, App::view)
+        .window_size(Size::new(800.0, 600.0))
+        .theme(App::theme)
+        .settings(App::settings())
+        .run_with(App::new)
+}
+
 #[derive(Default)]
 struct App {
 }
 
 #[derive(Debug, Clone, Copy)]
 enum Message {
+    FontLoaded(Result<(), iced::font::Error>),
 }
 
-use iced::widget::{column, text, Column};
-use iced::{Settings, Size, Theme};
-
 impl App {
-    pub fn view(&self) -> Column<Message> {
-        // 縦に並べるやつ
-        column![
-            text("Hello World!"),
-        ]
+    pub fn new() -> (Self, Task<Message>) {
+        let task = iced::font::load(include_bytes!("../resources/fonts/ZenKakuGothicNew-Regular.ttf")).map(Message::FontLoaded);
+        (Self::default(), task)
     }
     pub fn update(&mut self, _message: Message) {
-        // ここにイベント処理とかを書く。
+        match _message {
+            Message::FontLoaded(Ok(())) => {
+                println!("Font loaded successfully!");
+            }
+            Message::FontLoaded(Err(error)) => {
+                eprintln!("Failed to load font: {:?}", error);
+            }
+        }
     }
     pub fn theme(&self) -> Theme {
         Theme::Dark
     }
     pub fn settings() -> Settings {
-        let fonts = vec![
-            include_bytes!("../resources/fonts/NotoSansJP-Regular.ttf").as_slice().into(),
-            include_bytes!("../resources/fonts/NotoSansJP-Bold.ttf").as_slice().into(),
-        ];
         Settings {
-            fonts,
+            fonts: font::load_fonts(),
+            default_font: iced::Font::with_name("Zen Kaku Gothic New"),
             ..Settings::default()
         }
     }
-}
 
-fn main() -> iced::Result {
-    iced::application("OGSP Disaster Prevention", App::update, App::view)
-        .window_size(Size::new(800.0, 600.0))
-        .theme(App::theme)
-        .settings(App::settings())
-        .run()
+    pub fn view(&self) -> Container<Message> {
+        center(
+            column!(
+                text("Hello, world!"),
+                text("Icedはクールですね（アイスだけに）"),
+                text("赤色テキスト").color([1.0, 0.0, 0.0]),
+                text("大きなテキスト").font(
+                    iced::font::Font {
+                        weight: iced::font::Weight::Bold,
+                        ..iced::font::Font::with_name("Noto Sans JP")
+                    }
+                ).size(20),
+            )
+        )
+    }
 }
