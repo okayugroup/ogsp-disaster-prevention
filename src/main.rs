@@ -28,26 +28,26 @@ impl App {
     pub fn settings() -> Settings {
         Settings {
             fonts: font::load_fonts(),
-            default_font: font::default_font(),
+            default_font: font::zen_kaku_gothic_new().into(),
             ..Settings::default()
         }
     }
 
     pub fn view(&self) -> Container<Message> {
         column!(
-            text("Hello, world!")
-                .font(iced::font::Font {
-                    weight: iced::font::Weight::Bold,
-                    ..font::default_font()
-                }).size(20),
+            text("OGSP Disaster Prevention")
+            .font(font::zen_kaku_gothic_new().black())
+            .size(30), // ヘッダーになるところ
             center(
                 column!(
                     text("Hello, world!"),
-                    text("Icedはクールですね（アイスだけに）"),
+                    text("Icedはクールですね"),
                     text("赤色テキスト").color([1.0, 0.0, 0.0]),
                     text("大きなテキスト").size(20),
+                    text("太字テキスト").font(font::zen_kaku_gothic_new().bold()),
+                    button("リンクにぶっ飛ばす").on_press(Message::OpenLink("https://google.com"))
                 )
             )
-        ).into()
+        )
     }
 }
