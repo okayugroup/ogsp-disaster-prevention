@@ -19,6 +19,16 @@ OGSP Disaster Preventionは、[おかゆグループ地震計プロジェクト 
 - 地図上に災害データを表示します。
 </details>
 
+## ドキュメント
+このプロジェクトでは、ユーザー向けと開発者向けのドキュメントを提供しています。
+詳しくは[Docs (README.md)](docs/README.md)をご覧ください。
+
+それぞれのドキュメントへのアクセス：
+- [ユーザー向け](docs/user/_index.md)
+- [開発者向け](docs/develop/_index.md)
+
+ぜひ併せてご利用ください。
+
 ## 開発
 ### 言語・フレームワーク
 - Go ([バックエンド](https://github.com/yossy4411/ogsp-server))
